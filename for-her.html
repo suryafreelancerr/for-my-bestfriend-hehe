@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+
+<style>
+/* ---------- PASSWORD SCREEN ---------- */
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ffd6e8, #fff0f7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  font-family: "Georgia", serif;
+}
+
+.lock-box {
+  background: rgba(255,245,250,0.95);
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 25px 50px rgba(192,108,132,0.3);
+  text-align: center;
+}
+
+.lock-box h2 {
+  color: #c06c84;
+  font-weight: normal;
+}
+
+.lock-box input {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ffc1dc;
+  outline: none;
+}
+
+.lock-box button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 25px;
+  border: none;
+  background: #ff9ecb;
+  color: #5a2a3c;
+  cursor: pointer;
+}
+
+/* ---------- MAIN PAGE ---------- */
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #ffd6e8, #fff0f7);
+  font-family: "Georgia", serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 5vh;
+  padding: 45px;
+  background: rgba(255,245,250,0.95);
+  border-radius: 22px;
+  box-shadow: 0 25px 50px rgba(192,108,132,0.25);
+  color: #5a2a3c;
+  line-height: 1.8;
+  text-align: center;
+  animation: fadeIn 2s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.card:hover {
+  box-shadow: 0 0 40px rgba(255, 158, 203, 0.6);
+  transition: box-shadow 0.8s ease;
+}
+
+h1 {
+  color: #c06c84;
+  font-weight: normal;
+}
+
+.signature {
+  margin-top: 30px;
+  text-align: right;
+  font-style: italic;
+  color: #8a4a5f;
+}
+
+/* ---------- FLOATING HEARTS ---------- */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ---------- ROSE PETALS ---------- */
+.petal {
+  position: absolute;
+  font-size: 18px;
+  animation: fall 8s linear infinite;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* ---------- SPARKLES ---------- */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #ffd1e8 0%, rgba(255,209,232,0) 70%);
+  border-radius: 50%;
+  animation: sparkle 3s ease-in-out infinite;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(0.4); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ---------- FADE ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <h2>for my pookie only 💕</h2>
+    <input type="password" id="password" placeholder="enter password">
+    <br>
+    <button onclick="unlock()">unlock 💗</button>
+  </div>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card">
+  <h1>Just a small note, for my bestfriend that i met in discord</h1>
+
+  <p>
+    Hey moon you came into my life as a stranger and over time became someone my heart feels closest to In ways I never expected you grew into a place of comfort trust and warmth
+  </p>
+
+  <p>
+    I care about you deeply and I want you to know that no matter what you face you will always have my support Distance may separate us at times but it only reminds me how special our bond is and how much you are missed I hold this friendship gently and with gratitude
+  </p>
+
+  <p>
+    and I truly hope to keep walking beside you offering loyalty kindness and love for as long as life allows because being your friend is something I will always cherish
+  </p>
+
+  <p>
+    This is simply a thank you,
+    wrapped in a few lines and sincere admiration—
+    for who you are, and how beautifully you choose to be.
+  </p>
+
+  <p id="typing" style="font-style: italic; color:#c06c84;"></p>
+
+  <p id="secret" style="display:none; margin-top:20px; color:#8a4a5f; font-style:italic;">
+    I feel safe with you.
+  </p>
+
+  <div class="signature">
+    — with love and care "JD"
+  </div>
+</div>
+
+<script>
+/* PASSWORD */
+const correctPassword = "moon";
+
+function unlock() {
+  const input = document.getElementById("password").value;
+  if (input === correctPassword) {
+    document.getElementById("lockScreen").style.display = "none";
+    typeMessage();
+  } else {
+    alert("wrong password pookie 💔");
+  }
+}
+
+/* TYPEWRITER */
+const message = "you’re my favorite part of every day.";
+let i = 0;
+
+function typeMessage() {
+  if (i < message.length) {
+    document.getElementById("typing").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeMessage, 70);
+  }
+}
+
+/* SECRET MESSAGE */
+document.querySelector(".card").addEventListener("click", () => {
+  document.getElementById("secret").style.display = "block";
+});
+
+/* FLOATING HEARTS */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* ROSE PETALS */
+setInterval(() => {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.innerHTML = "🌹";
+  petal.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 8000);
+}, 700);
+
+/* SPARKLES */
+setInterval(() => {
+  const sparkle = document.createElement("div");
+  sparkle.className = "sparkle";
+  sparkle.style.left = Math.random() * 100 + "vw";
+  sparkle.style.top = Math.random() * 100 + "vh";
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 3000);
+}, 300);
+</script>
+
+</body>
+</html>
